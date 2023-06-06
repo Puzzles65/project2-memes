@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+
+<main>
+    <h1><%= title %></h1>
+    <div class="memes">
+      <% if (memes.length > 0) { %>
+        <% memes.forEach((meme) => { %>
+          <div class="meme">
+            <h2><%= meme.title %></h2>
+            <img src="<%= meme.url %>" alt="<%= meme.title %>">
+            <p><%= meme.description %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No memes found.</p>
+      <% } %>
+    </div>
+  </main>
+
+<%- include('../partials/footer') %>

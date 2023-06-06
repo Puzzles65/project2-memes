@@ -9,15 +9,16 @@ module.exports = {
   like,
   dislike,
   addComment,
-  deleteComment
+  deleteComment,
+  new: newMeme,
 };
 
 async function index(req, res) {
   try {
-    const memes = await Meme.find();
+    const memes = await Meme.find({});
     res.render('memes/index', { title: 'All Memes', memes });
-  } catch (error) {
-    res.render('error', { message: 'Failed to get memes.', error: error.message });
+  } catch (err) {
+    res.status(500).send('Error retrieving memes');
   }
 }
 
@@ -25,57 +26,66 @@ async function show(req, res) {
   try {
     const meme = await Meme.findById(req.params.id);
     res.render('memes/show', { title: 'Meme Detail', meme });
-  } catch (error) {
-    res.render('error', { message: 'Failed to get meme.', error: error.message });
+  } catch (err) {
+    res.status(404).send('Meme not found');
   }
+}
+
+function newMeme(req, res) {
+  res.render('memes/new', { title: 'Add Memes' });
 }
 
 async function create(req, res) {
   try {
-    const newMeme = await Meme.create(req.body);
-    res.redirect(`/memes/${newMeme._id}`);
-  } catch (error) {
-    res.render('error', { message: 'Failed to create meme.', error: error.message });
+    const newMeme = new Meme({
+      title: req.body.title,
+      url: req.body.url,
+      description: req.body.description,
+    });
+    const savedMeme = await newMeme.save();
+    res.redirect(`/memes/${savedMeme._id}`);
+  } catch (err) {
+    res.status(500).send('Error creating meme');
   }
 }
 
 async function update(req, res) {
   try {
-    const updatedMeme = await Meme.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.render('memes/show', { title: 'Updated Meme', meme: updatedMeme });
-  } catch (error) {
-    res.render('error', { message: 'Failed to update meme.', error: error.message });
+    const meme = await Meme.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.redirect(`/memes/${meme._id}`);
+  } catch (err) {
+    res.status(500).send('Error updating meme');
   }
 }
 
 async function remove(req, res) {
   try {
-    await Meme.findByIdAndDelete(req.params.id);
+    await Meme.findByIdAndRemove(req.params.id);
     res.redirect('/memes');
-  } catch (error) {
-    res.render('error', { message: 'Failed to delete meme.', error: error.message });
+  } catch (err) {
+    res.status(500).send('Error deleting meme');
   }
 }
 
 async function like(req, res) {
   try {
     const meme = await Meme.findById(req.params.id);
-    meme.likes.push(req.body.userId);
-    const updatedMeme = await meme.save();
-    res.render('memes/show', { title: 'Liked Meme', meme: updatedMeme });
-  } catch (error) {
-    res.render('error', { message: 'Failed to like meme.', error: error.message });
+    meme.likes.push(req.user.id); // Assuming you're using user authentication and have access to the user's ID
+    await meme.save();
+    res.redirect(`/memes/${meme._id}`);
+  } catch (err) {
+    res.status(500).send('Failed to like the meme');
   }
 }
 
 async function dislike(req, res) {
   try {
     const meme = await Meme.findById(req.params.id);
-    meme.dislikes.push(req.body.userId);
-    const updatedMeme = await meme.save();
-    res.render('memes/show', { title: 'Disliked Meme', meme: updatedMeme });
-  } catch (error) {
-    res.render('error', { message: 'Failed to dislike meme.', error: error.message });
+    meme.dislikes.push(req.user.id); 
+    await meme.save();
+    res.redirect(`/memes/${meme._id}`);
+  } catch (err) {
+    res.status(500).send('Failed to dislike the meme');
   }
 }
 
@@ -83,23 +93,24 @@ async function addComment(req, res) {
   try {
     const meme = await Meme.findById(req.params.id);
     meme.comments.push({
-      user: req.body.userId,
+      user: req.body.user,
       content: req.body.content,
     });
-    const updatedMeme = await meme.save();
-    res.render('memes/show', { title: 'Meme with New Comment', meme: updatedMeme });
-  } catch (error) {
-    res.render('error', { message: 'Failed to add comment to meme.', error: error.message });
+    await meme.save();
+    res.redirect(`/memes/${meme._id}`);
+  } catch (err) {
+    res.status(500).send('Failed to add comment');
   }
 }
 
 async function deleteComment(req, res) {
-    try {
-      const meme = await Meme.findById(req.params.id);
-      meme.comments = meme.comments.filter(comment => comment._id.toString() !== req.params.commentId);
-      const updatedMeme = await meme.save();
-      res.render('memes/show', { title: 'Meme with Comment Deleted', meme: updatedMeme });
-    } catch (error) {
-      res.render('error', { message: 'Failed to delete comment.', error: error.message });
-    }
-  } 
+  try {
+    const meme = await Meme.findById(req.params.id);
+    const comment = meme.comments.id(req.params.commentId);
+    comment.remove();
+    await meme.save();
+    res.redirect(`/memes/${meme._id}`);
+  } catch (err) {
+    res.status(500).send('Failed to delete comment');
+  }
+}

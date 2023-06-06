@@ -5,10 +5,13 @@ const memesCtrl = require('../controllers/memes');
 //const meme = require('../models/meme');
 // getting all memes
 router.get('/', memesCtrl.index);
-// getting a specific meme
-router.get('/:id', memesCtrl.show)
 // posting new meme
 router.post('/', memesCtrl.create)
+// Getting the "New Meme" page
+router.get('/new', memesCtrl.new);
+// getting a specific meme
+router.get('/:id', memesCtrl.show)
+
 // updating meme 
 router.put('/:id', memesCtrl.update)
 // deleting 
