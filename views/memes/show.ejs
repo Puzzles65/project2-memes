@@ -1,8 +1,7 @@
 <%- include('../partials/header') %>
 
 <h2>Meme Details</h2>
-<p><strong>Title:</strong> <%= meme.title %></p>
-<p><strong>URL:</strong> <%= meme.url %></p>
+<img src="<%= meme.imageUrl %>" alt="Meme Image">
 <p><strong>Description:</strong> <%= meme.description %></p>
 
 <h2>Likes: <%= meme.likes.length %></h2>

@@ -37,18 +37,23 @@ function newMeme(req, res) {
 
 async function create(req, res) {
   try {
+    const { title, description, imageUrl } = req.body;
+    const user = req.user; 
+    
     const newMeme = new Meme({
-      title: req.body.title,
-      url: req.body.url,
-      description: req.body.description,
+      title,
+      description,
+      imageUrl,
+      user: user._id, // Assign the ObjectId of the user to the user field
     });
+
     const savedMeme = await newMeme.save();
     res.redirect(`/memes/${savedMeme._id}`);
   } catch (err) {
+    console.error(err);
     res.status(500).send('Error creating meme');
   }
 }
-
 async function update(req, res) {
   try {
     const meme = await Meme.findByIdAndUpdate(req.params.id, req.body, { new: true });

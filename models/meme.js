@@ -6,11 +6,7 @@ const memeSchema = new Schema({
       type: String,
       required: true,
     },
-    image_url: {
-      type: String,
-      required: true,
-    },
-    category: {
+    imageUrl: {
       type: String,
       required: true,
     },
