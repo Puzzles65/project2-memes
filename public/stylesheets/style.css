@@ -27,6 +27,7 @@ nav > img {
   width: 34px;
   object-fit: contain;
   margin-right: auto;
+  color: #424748;
 }
 
 body > main {
@@ -176,4 +177,14 @@ hr {
 
 .login img {
   height: 30px;
+}
+
+.meme {
+  width: 600px;
+  height: auto;
+
+}
+.meme img {
+  width: 100%;
+  height: auto;
 }
