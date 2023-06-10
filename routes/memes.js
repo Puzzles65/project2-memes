@@ -12,17 +12,11 @@ router.get('/new', memesCtrl.new);
 // getting a specific meme
 router.get('/:id', memesCtrl.show)
 
+router.post('/:id/update', memesCtrl.update);
 // updating meme 
 router.put('/:id', memesCtrl.update)
 // deleting 
-router.delete('/:id', memesCtrl.remove)
-// post like 
-router.post('/:id/like', memesCtrl.like)
-// post dislike
-router.post('/:id/dislike', memesCtrl.dislike)
-// post comment 
-router.post('/:id/comments', memesCtrl.addComment)
-// delete comment 
-router.delete('/:id/comments/:commentId', memesCtrl.deleteComment)
+router.post('/:id/delete', memesCtrl.remove)
+
 
 module.exports = router;

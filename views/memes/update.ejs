@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+
+<form action="/memes/<%= meme._id %>/update" method="POST">
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" value="<%= meme.title %>" required>
+    </div>
+    <div class="form-group">
+      <label for="imageUrl">Image URL:</label>
+      <input type="url" id="imageUrl" name="imageUrl" value="<%= meme.imageUrl %>" required>
+    </div>
+    <div class="form-group">
+      <button type="submit">Update</button>
+    </div>
+  </form>
+
+<%- include('../partials/footer') %>

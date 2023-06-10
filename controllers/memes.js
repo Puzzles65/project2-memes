@@ -6,10 +6,6 @@ module.exports = {
   create,
   update,
   remove,
-  like,
-  dislike,
-  addComment,
-  deleteComment,
   new: newMeme,
 };
 
@@ -66,56 +62,12 @@ async function update(req, res) {
 async function remove(req, res) {
   try {
     await Meme.findByIdAndRemove(req.params.id);
+    
+    
     res.redirect('/memes');
   } catch (err) {
     res.status(500).send('Error deleting meme');
   }
 }
 
-async function like(req, res) {
-  try {
-    const meme = await Meme.findById(req.params.id);
-    meme.likes.push(req.user.id); // Assuming you're using user authentication and have access to the user's ID
-    await meme.save();
-    res.redirect(`/memes/${meme._id}`);
-  } catch (err) {
-    res.status(500).send('Failed to like the meme');
-  }
-}
 
-async function dislike(req, res) {
-  try {
-    const meme = await Meme.findById(req.params.id);
-    meme.dislikes.push(req.user.id); 
-    await meme.save();
-    res.redirect(`/memes/${meme._id}`);
-  } catch (err) {
-    res.status(500).send('Failed to dislike the meme');
-  }
-}
-
-async function addComment(req, res) {
-  try {
-    const meme = await Meme.findById(req.params.id);
-    meme.comments.push({
-      user: req.body.user,
-      content: req.body.content,
-    });
-    await meme.save();
-    res.redirect(`/memes/${meme._id}`);
-  } catch (err) {
-    res.status(500).send('Failed to add comment');
-  }
-}
-
-async function deleteComment(req, res) {
-  try {
-    const meme = await Meme.findById(req.params.id);
-    const comment = meme.comments.id(req.params.commentId);
-    comment.remove();
-    await meme.save();
-    res.redirect(`/memes/${meme._id}`);
-  } catch (err) {
-    res.status(500).send('Failed to delete comment');
-  }
-}

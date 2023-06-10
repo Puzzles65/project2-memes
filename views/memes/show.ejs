@@ -1,45 +1,5 @@
 <%- include('../partials/header') %>
 
-<h2>Meme Details</h2>
-<img src="<%= meme.imageUrl %>" alt="Meme Image">
-<p><strong>Description:</strong> <%= meme.description %></p>
 
-<h2>Likes: <%= meme.likes.length %></h2>
-<form action="/memes/<%= meme._id %>/like" method="POST">
-  <button type="submit">Like</button>
-</form>
-
-<h2>Dislikes: <%= meme.dislikes.length %></h2>
-<form action="/memes/<%= meme._id %>/dislike" method="POST">
-  <button type="submit">Dislike</button>
-</form>
-
-<h2>Comments</h2>
-<% if (meme.comments.length === 0) { %>
-  <p>No comments yet.</p>
-<% } else { %>
-  <ul>
-    <% meme.comments.forEach(function(comment) { %>
-      <li>
-        <p><strong>User:</strong> <%= comment.user %></p>
-        <p><strong>Content:</strong> <%= comment.content %></p>
-        <form action="/memes/<%= meme._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-          <button type="submit">Delete</button>
-        </form>
-      </li>
-    <% }); %>
-  </ul>
-<% } %>
-
-<h2>Add Comment</h2>
-<form action="/memes/<%= meme._id %>/comments" method="POST">
-  <label for="user">User:</label>
-  <input type="text" id="user" name="user" required>
-
-  <label for="content">Content:</label>
-  <textarea id="content" name="content" required></textarea>
-
-  <button type="submit">Submit</button>
-</form>
 
 <%- include('../partials/footer') %>
