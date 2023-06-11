@@ -12,9 +12,11 @@ router.get('/new', memesCtrl.new);
 // getting a specific meme
 router.get('/:id', memesCtrl.show)
 
-router.post('/:id/update', memesCtrl.update);
 // updating meme 
-router.put('/:id', memesCtrl.update)
+router.post('/:id/updateForm', memesCtrl.updateForm);
+
+router.post('/:id/update', memesCtrl.update);
+//router.put('/:id/update', memesCtrl.update)
 // deleting 
 router.post('/:id/delete', memesCtrl.remove)
 

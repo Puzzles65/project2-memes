@@ -9,7 +9,9 @@
     <p><%= meme.description %></p>
   </div>
   <div class="button-group">
-    <a href="/memes/<%= meme._id %>/update" class="update-button">Update</a>
+    <form action="/memes/<%= meme._id %>/updateForm" method="post" class="update-form">
+      <button type="submit" class="update-form">Update</button>
+    </form>
     <form action="/memes/<%= meme._id %>/delete" method="post" class="delete-form">
       <button type="submit" class="delete-button">Delete</button>
     </form>

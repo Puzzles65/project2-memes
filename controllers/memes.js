@@ -5,6 +5,7 @@ module.exports = {
   show,
   create,
   update,
+  updateForm,
   remove,
   new: newMeme,
 };
@@ -50,10 +51,21 @@ async function create(req, res) {
     res.status(500).send('Error creating meme');
   }
 }
-async function update(req, res) {
+async function update(req,res) {
+  try{
+    const meme = await Meme.findByIdAndUpdate(req.params.id, {title: req.body.title, imageUrl: req.body.imageUrl})
+    console.log(req.params, req.body) 
+    res.redirect('/memes')
+  } catch (err){
+    console.log(err)
+  }
+}
+
+
+async function updateForm(req, res) {
   try {
-    const meme = await Meme.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.redirect(`/memes/${meme._id}`);
+    const meme = await Meme.findById(req.params.id);
+    res.render(`memes/updateForm`, {title: "Update meme", meme});
   } catch (err) {
     res.status(500).send('Error updating meme');
   }
