@@ -8,14 +8,16 @@
     <img src="<%= meme.imageUrl %>" alt="Meme Image">
     <p><%= meme.description %></p>
   </div>
+<% if (user) { %>  
   <div class="button-group">
     <form action="/memes/<%= meme._id %>/updateForm" method="post" class="update-form">
-      <button type="submit" class="update-form">Update</button>
+      <button type="submit" class="button-update">Update</button>
     </form>
     <form action="/memes/<%= meme._id %>/delete" method="post" class="delete-form">
-      <button type="submit" class="delete-button">Delete</button>
+      <button type="submit" class="button-delete">Delete</button>
     </form>
   </div>
+<% } %>  
 <% }) %>
 
 <%- include('../partials/footer') %>

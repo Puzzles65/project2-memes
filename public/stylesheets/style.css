@@ -61,56 +61,6 @@ nav > a.active {
   cursor: default;
 }
 
-#new-form {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(2, minmax(auto, 22rem));
-}
-
-#new-form *,
-#add-review-form *,
-#add-performer-form * {
-  font-size: 20px;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-#new-form input[type="submit"] {
-  grid-column: span 2;
-  width: 10rem;
-  margin-left: auto;
-}
-
-table {
-  font-size: 20px;
-}
-
-table thead th {
-  padding: 5px;
-  border-bottom: 2px solid #424748;
-}
-
-table td {
-  padding: 10px;
-  text-align: center;
-}
-
-#list td:nth-child(2), #list td:nth-child(3){
-  min-width: 100px;
-}
-
-#list a {
-  border-radius: 4px;
-  background-color: #B8C0C2;
-  padding: 4px;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-#list a:hover {
-  background-color: white;
-}
-
 #show-page {
   display: grid;
   grid-template-columns: auto auto;
@@ -188,3 +138,89 @@ hr {
   width: 100%;
   height: auto;
 }
+
+.addMemeForm , .updateForm {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.addMemeForm div, .updateForm div {
+  margin-bottom: 10px;
+}
+
+.addMemeForm input[type="text"],
+.addMemeForm button[type="submit"],
+.updateForm input[type="text"],
+.updateForm button[type="submit"] {
+  width: 100%;
+  padding: 5px;
+}
+
+.addMemeForm button[type="submit"],
+.updateForm button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.5 ease;
+}
+
+.addMemeForm button[type="submit"]:hover, 
+.updateForm button[type="submit"]:hover {
+  background-color: #317033;
+} 
+
+.button-group {
+  display: flex;
+}
+
+.button-delete, .button-update {
+  background-color: #3DD1E7;
+  border: 0 solid #E5E7EB;
+  box-sizing: border-box;
+  color: #000000;
+  display: flex;
+  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1.75rem;
+  padding: .75rem 1.65rem;
+  position: relative;
+  text-align: center;
+  text-decoration: none #000000 solid;
+  text-decoration-thickness: auto;
+  width: 100%;
+  max-width: 460px;
+  position: relative;
+  cursor: pointer;
+  transform: rotate(-2deg);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-delete {
+  background-color: #f95959;
+}
+
+.button-delete:focus, .button-delete:focus {
+  outline: 0;
+}
+
+.button-delete:after, .button-update:after {
+  content: '';
+  position: absolute;
+  border: 1px solid #000000;
+  bottom: 4px;
+  left: 4px;
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
+}
+
+.button-delete:hover:after, .button-update:hover:after {
+  bottom: 2px;
+  left: 2px;
+}
+
