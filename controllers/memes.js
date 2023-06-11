@@ -44,8 +44,8 @@ async function create(req, res) {
       user: user._id, // Assign the ObjectId of the user to the user field
     });
 
-    const savedMeme = await newMeme.save();
-    res.redirect(`/memes/${savedMeme._id}`);
+    await newMeme.save();
+    res.redirect(`/memes`);
   } catch (err) {
     console.error(err);
     res.status(500).send('Error creating meme');
