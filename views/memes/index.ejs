@@ -10,10 +10,10 @@
   </div>
 <% if (user) { %>  
   <div class="button-group">
-    <form action="/memes/<%= meme._id %>/updateForm" method="post" class="update-form">
+    <form action="/memes/<%= meme._id %>/updateForm" method="post" class="btn update-form">
       <button type="submit" class="button-update">Update</button>
     </form>
-    <form action="/memes/<%= meme._id %>/delete" method="post" class="delete-form">
+    <form action="/memes/<%= meme._id %>/delete" method="post" class="btn delete-form">
       <button type="submit" class="button-delete">Delete</button>
     </form>
   </div>
@@ -21,3 +21,4 @@
 <% }) %>
 
 <%- include('../partials/footer') %>
+
